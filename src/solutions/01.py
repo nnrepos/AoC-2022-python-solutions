@@ -2,6 +2,7 @@ from src.utils.utils import *
 
 lines = get_input(__file__)
 
+
 def top3():
     curr = 0
     m1, m2, m3 = 0, 0, 0

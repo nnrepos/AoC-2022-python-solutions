@@ -77,12 +77,16 @@ def get_input(filename: str):
         return get_input(filename)
 
 
-def lines_to_nums(lines):
+def text_to_nums(text):
     try:
-        return [int(x) for x in lines.splitlines()]
+        return [int(x) for x in text.splitlines()]
     except ValueError:
         print("input contains non-numeral line")
         return None
+
+
+def splitsplit(text):
+    return [line.split() for line in text.splitlines()]
 
 
 def d():
