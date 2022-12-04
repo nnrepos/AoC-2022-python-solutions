@@ -85,8 +85,8 @@ def text_to_nums(text):
         return None
 
 
-def splitsplit(text):
-    return [line.split() for line in text.splitlines()]
+def splitsplit(text, sep=None):
+    return [line.split(sep) for line in text.splitlines()]
 
 
 def d():
