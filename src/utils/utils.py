@@ -13,7 +13,7 @@ from src.utils.cookie import COOKIE
 # prevent optimizations
 _ = (Counter, deque, reduce, heapify, heappush, heappop, parse)
 
-# useful shortcut
+# useful alias
 pp = print
 
 YEAR = 2022
@@ -89,5 +89,9 @@ def splitsplit(text, sep=None):
     return [line.split(sep) for line in text.splitlines()]
 
 
-def d():
+def ddi():
     return defaultdict(int)
+
+
+def ddl():
+    return defaultdict(list)

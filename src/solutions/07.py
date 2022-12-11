@@ -6,7 +6,7 @@ text = get_input(__file__)
 def part1():
     dir_hierarchy = []
     curr_dir_name = ''
-    sizes = d()
+    sizes = ddi()
     for i, line in enumerate(text.splitlines()):
         line = line.strip()
         if line == '$ cd ..':
@@ -43,7 +43,7 @@ def part1():
 def part2():
     dir_hierarchy = []
     curr_dir_name = ''
-    sizes = d()
+    sizes = ddi()
     for i, line in enumerate(text.splitlines()):
         line = line.strip()
         if line == '$ cd ..':
