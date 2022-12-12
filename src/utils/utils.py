@@ -4,6 +4,7 @@ from functools import reduce
 from heapq import heapify, heappush, heappop
 from pathlib import Path
 from math import sqrt
+from pprint import pprint
 
 import requests
 from parse import parse
@@ -87,6 +88,28 @@ def text_to_nums(text):
 
 def splitsplit(text, sep=None):
     return [line.split(sep) for line in text.splitlines()]
+
+
+def bfs(starts: set, grid: list[list], dists: list[list[int]], get_univisted_function):
+    """
+    breadth-first-search algorithm, calculates distances based on `get_univisted_function`.
+    stores result in `dists`.
+    """
+    queue = starts
+    next_queue = set()
+    curr_dist = 0
+    while True:
+        while queue:
+            curr = queue.pop()
+            dists[curr[0]][curr[1]] = curr_dist
+            neighbours = get_univisted_function(curr, grid)
+            for nei in neighbours:
+                next_queue.add(nei)
+        if not next_queue:
+            break
+        queue |= next_queue
+        curr_dist += 1
+        next_queue = set()
 
 
 def ddi():
