@@ -1,10 +1,10 @@
 import json
+import re
 from collections import defaultdict, Counter, deque
 from functools import reduce
 from heapq import heapify, heappush, heappop
-from pathlib import Path
 from math import sqrt
-from pprint import pprint
+from pathlib import Path
 
 import requests
 from parse import parse
@@ -38,6 +38,10 @@ def mandist3d(x, y, z, xx, yy, zz):
 
 def dist3d(x, y, z, xx, yy, zz):
     return sqrt((x - xx) ** 2 + (y - yy) ** 2 + (z - zz) ** 2)
+
+
+def ints(line):
+    return re.findall(r'(\d+)', line)
 
 
 def get_input(filename: str):
