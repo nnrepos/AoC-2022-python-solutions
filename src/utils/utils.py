@@ -91,7 +91,7 @@ def text_to_nums(text):
 
 
 def splitsplit(text, sep=None):
-    return [line.split(sep) for line in text.splitlines()]
+    return [line.strip().split(sep) for line in text.splitlines()]
 
 
 def bfs(starts: set, grid: list[list], dists: list[list[int]], get_univisted_function):
