@@ -41,7 +41,7 @@ def dist3d(x, y, z, xx, yy, zz):
 
 
 def ints(line):
-    return re.findall(r'(\d+)', line)
+    return (int(x) for x in re.findall(r'(-?\d+)', line))
 
 
 def get_input(filename: str):
