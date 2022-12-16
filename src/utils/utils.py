@@ -2,6 +2,7 @@ import json
 import re
 from collections import defaultdict, Counter, deque
 from functools import reduce
+from itertools import combinations, permutations
 from heapq import heapify, heappush, heappop
 from math import sqrt
 from pathlib import Path
@@ -26,6 +27,7 @@ HTML_NOT_FOUND = 404
 ADJ = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 DIAG = [(-1, -1), (-1, 1), (1, -1), (1, 1)]
 AROUND = ADJ + DIAG
+UNVISITED = 420_420_420_420
 
 
 def mandist(x, y, xx, yy):
@@ -94,19 +96,25 @@ def splitsplit(text, sep=None):
     return [line.strip().split(sep) for line in text.splitlines()]
 
 
-def bfs(starts: set, grid: list[list], dists: list[list[int]], get_univisted_function):
+def bfs(starts: [set | int], grid: [list | dict | set], dists: [list | dict | set], get_univisted_function) -> None:
     """
     breadth-first-search algorithm, calculates distances based on `get_univisted_function`.
     stores result in `dists`.
+    the function returns only the univisted neighbours, using `grid` and `dists`.
     """
-    queue = starts
+    if isinstance(starts, set):
+        queue = starts
+    else:
+        queue = set()
+        queue.add(starts)
+
     next_queue = set()
     curr_dist = 0
     while True:
         while queue:
             curr = queue.pop()
-            dists[curr[0]][curr[1]] = curr_dist
-            neighbours = get_univisted_function(curr, grid)
+            dists[curr] = curr_dist
+            neighbours = get_univisted_function(curr, dists, grid)
             for nei in neighbours:
                 next_queue.add(nei)
         if not next_queue:
