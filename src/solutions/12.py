@@ -16,7 +16,7 @@ def get_unvisited_nei(coords, dists, grid):
     for drow, dcol in ADJ:
         srow, scol = row + drow, col + dcol
         if srow in range(nrow) and scol in range(ncol):
-            if (dists[(srow, scol)]) >= UNVISITED:
+            if (dists[(srow, scol)]) >= INF_DIST:
                 hisletter = grid[srow][scol]
                 if (ord(hisletter) <= ord(myletter) + 1) or myletter == 'S' or hisletter == 'E':
                     ret.append((srow, scol))
@@ -25,7 +25,7 @@ def get_unvisited_nei(coords, dists, grid):
 
 def part1():
     global dists
-    dists = {(i, j): UNVISITED for i, line in enumerate(text.splitlines()) for j, _ in enumerate(line)}
+    dists = {(i, j): INF_DIST for i, line in enumerate(text.splitlines()) for j, _ in enumerate(line)}
     start, end = None, None
     for row in range(nrow):
         for col in range(ncol):
@@ -40,7 +40,7 @@ def part1():
 
 def part2():
     global dists
-    dists = {(i, j): UNVISITED for i, line in enumerate(text.splitlines()) for j, _ in enumerate(line)}
+    dists = {(i, j): INF_DIST for i, line in enumerate(text.splitlines()) for j, _ in enumerate(line)}
 
     end = None
     As = set()

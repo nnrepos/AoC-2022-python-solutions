@@ -25,9 +25,10 @@ INPUTS_FILE = "inputs.json"
 HTML_OK = 200
 HTML_NOT_FOUND = 404
 ADJ = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+ADJ3D = [(-1, 0,0), (1, 0, 0), (0, -1, 0), (0, 1, 0), (0, 0, 1), (0, 0, -1)]
 DIAG = [(-1, -1), (-1, 1), (1, -1), (1, 1)]
 AROUND = ADJ + DIAG
-UNVISITED = 420_420_420_420
+INF_DIST = 420_420_420_420
 
 
 def mandist(x, y, xx, yy):
@@ -42,8 +43,8 @@ def dist3d(x, y, z, xx, yy, zz):
     return sqrt((x - xx) ** 2 + (y - yy) ** 2 + (z - zz) ** 2)
 
 
-def ints(line):
-    return (int(x) for x in re.findall(r'(-?\d+)', line))
+def ints(line) -> list:
+    return list((int(x) for x in re.findall(r'(-?\d+)', line)))
 
 
 def get_input(filename: str):

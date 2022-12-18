@@ -10,7 +10,7 @@ TIME_LIMIT2 = 26
 def get_univisted_nei(curr, dists, valves):
     ret = []
     for nei in valves[curr][1]:
-        if dists[nei] >= UNVISITED:
+        if dists[nei] >= INF_DIST:
             ret.append(nei)
 
     return ret
@@ -61,7 +61,7 @@ def part1():
 
     # create dists between all valves
     for src in valves:
-        curr_dists = {v: UNVISITED for v in valves}
+        curr_dists = {v: INF_DIST for v in valves}
         bfs(src, valves, curr_dists, get_univisted_nei)
         all_dists[src] = curr_dists
 
@@ -104,7 +104,7 @@ def part2():
 
     # create dists between all valves
     for src in valves:
-        curr_dists = {v: UNVISITED for v in valves}
+        curr_dists = {v: INF_DIST for v in valves}
         bfs(src, valves, curr_dists, get_univisted_nei)
         all_dists[src] = curr_dists
 
