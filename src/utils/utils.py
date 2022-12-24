@@ -6,7 +6,7 @@ from itertools import combinations, permutations
 from heapq import heapify, heappush, heappop
 from math import sqrt
 from pathlib import Path
-
+from functools import lru_cache
 import requests
 from parse import parse
 
@@ -25,10 +25,11 @@ INPUTS_FILE = "inputs.json"
 HTML_OK = 200
 HTML_NOT_FOUND = 404
 ADJ = [(-1, 0), (1, 0), (0, -1), (0, 1)]
-ADJ3D = [(-1, 0,0), (1, 0, 0), (0, -1, 0), (0, 1, 0), (0, 0, 1), (0, 0, -1)]
+ADJ3D = [(-1, 0, 0), (1, 0, 0), (0, -1, 0), (0, 1, 0), (0, 0, 1), (0, 0, -1)]
 DIAG = [(-1, -1), (-1, 1), (1, -1), (1, 1)]
 AROUND = ADJ + DIAG
-AROUND_COMPLEX = [-1, 1, -1j, 1j, -1-1j, -1+1j, 1-1j, 1+1j]
+AROUND_COMPLEX = [-1, 1, -1j, 1j, -1 - 1j, -1 + 1j, 1 - 1j, 1 + 1j]
+COMPLEX_ADJ = [1, -1, 1j, -1j]
 INF_DIST = 420_420_420_420
 
 
@@ -132,3 +133,7 @@ def ddi():
 
 def ddl():
     return defaultdict(list)
+
+
+def dds():
+    return defaultdict(set)
