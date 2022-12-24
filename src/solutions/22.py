@@ -62,41 +62,31 @@ step_list = ints(commands)
 rotations = list((x for x in re.findall(r'([A-Z]+)', commands)))
 
 
-def wrap(pos, face):
+def wrap(pos, dir):
     """
-    i stole this, too lazy to hard-code everything.
+    i shamelessly stole this method, too lazy to hard-code everything.
+    this is how i see the map of cube sides:
+     12
+     3
+    54
+    6  
     """
     x, y = pos.real, pos.imag
-    # TODOniv: fix this to match my input.
-    match face, x // 50, y // 50:
-        case 1j, 0, _:
-            return complex(149 - x, 99), -1j
-        case 1j, 1, _:
-            return complex(49, x + 50), -1
-        case 1j, 2, _:
-            return complex(149 - x, 149), -1j
-        case 1j, 3, _:
-            return complex(149, x - 100), -1
-        case -1j, 0, _:
-            return complex(149 - x, 0), 1j
-        case -1j, 1, _:
-            return complex(100, x - 50), 1
-        case -1j, 2, _:
-            return complex(149 - x, 50), 1j
-        case -1j, 3, _:
-            return complex(0, x - 100), 1
-        case 1, _, 0:
-            return complex(0, y + 100), 1
-        case 1, _, 1:
-            return complex(100 + y, 49), -1j
-        case 1, _, 2:
-            return complex(-50 + y, 99), -1j
-        case -1, _, 0:
-            return complex(50 + y, 50), 1j
-        case -1, _, 1:
-            return complex(100 + y, 0), 1j
-        case -1, _, 2:
-            return complex(199, y - 100), -1
+    match dir, x//50, y//50:
+        case  1j, 0, _: return complex(149-x, 99), -1j # 2R
+        case  1j, 1, _: return complex( 49,x+ 50), -1  # 3R
+        case  1j, 2, _: return complex(149-x,149), -1j # 4R
+        case  1j, 3, _: return complex(149,x-100), -1  # 6R
+        case -1j, 0, _: return complex(149-x,  0),  1j # 1L
+        case -1j, 1, _: return complex(100,x- 50),  1  # 3L
+        case -1j, 2, _: return complex(149-x, 50),  1j # 5L
+        case -1j, 3, _: return complex(  0,x-100),  1  # 6L
+        case  1 , _, 0: return complex(  0,y+100),  1  # 6D
+        case  1 , _, 1: return complex(100+y, 49), -1j # 4D
+        case  1 , _, 2: return complex(-50+y, 99), -1j # 2D
+        case -1 , _, 0: return complex( 50+y, 50),  1j # 5U
+        case -1 , _, 1: return complex(100+y,  0),  1j # 1U
+        case -1 , _, 2: return complex(199,y-100), -1  # 2U
 
 
 def get_next_tile2(curr_row, curr_col, delta):
@@ -106,33 +96,33 @@ def get_next_tile2(curr_row, curr_col, delta):
     next_delta = delta
 
     if (next_row, next_col) not in grid:
+        # tuple to complex
         pos = complex(curr_row, curr_col)
         face = None
         match delta:
             case (0, 1):
-                face = 1
-            case (1, 0):
                 face = 1j
+            case (1, 0):
+                face = 1
             case (0, -1):
-                face = -1
-            case (-1, 0):
                 face = -1j
+            case (-1, 0):
+                face = -1
 
         next_pos, next_face = wrap(pos, face)
-        next_row = next_pos.real
-        next_col = next_pos.imag
+        next_row = round(next_pos.real)
+        next_col = round(next_pos.imag)
         next_delta = None
         match next_face:
             case 1:
-                next_delta = (0, 1)
-            case 1j:
                 next_delta = (1, 0)
+            case 1j:
+                next_delta = (0, 1)
             case -1:
-                next_delta = (0, -1)
-            case -1j:
                 next_delta = (-1, 0)
-    
-    print(f'{next_row=}, {next_col=}, symbol={grid[(next_row, next_col)]}')
+            case -1j:
+                next_delta = (0, -1)
+
     assert (next_row, next_col) in grid
 
     if grid[(next_row, next_col)] == '.':
@@ -189,7 +179,6 @@ def part1():
 
 
 def part2():
-    print(text)
     curr_face_id = 0
     curr_tile = (start_row, start_col)
     for i, step in enumerate(step_list):
